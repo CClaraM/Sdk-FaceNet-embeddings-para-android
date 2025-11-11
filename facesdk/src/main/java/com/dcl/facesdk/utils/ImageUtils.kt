@@ -29,24 +29,6 @@ fun imageProxyToBitmapRGBA(image: ImageProxy): Bitmap {
     return rotated // ⚠️ Mantener ARGB_8888 para MediaPipe
 }
 
-/*fun imageProxyToBitmapRGBA(image: ImageProxy): Bitmap {
-    // OUTPUT_IMAGE_FORMAT_RGBA_8888 garantizado
-    val plane = image.planes[0].buffer
-    val width = image.width
-    val height = image.height
-
-    val bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    bmp.copyPixelsFromBuffer(plane)
-
-    // Rotación (NO espejo)
-    val rot = image.imageInfo.rotationDegrees
-    if (rot != 0) {
-        val m = Matrix().apply { postRotate(rot.toFloat()) }
-        return Bitmap.createBitmap(bmp, 0, 0, bmp.width, bmp.height, m, true)
-    }
-    return bmp
-}*/
-
 fun Bitmap.prepareForEmbedding(): Bitmap {
     // ✅ FaceNet requiere ARGB_8888 (igual que MediaPipe)
     return if (this.config != Bitmap.Config.ARGB_8888) {
@@ -116,14 +98,6 @@ fun mirroredToNonMirrored(rect: Rect, width: Int): Rect {
     )
 }
 
-/*fun safeCropBitmap(src: Bitmap, rect: Rect): Bitmap? {
-    val left = rect.left.coerceIn(0, src.width - 1)
-    val top = rect.top.coerceIn(0, src.height - 1)
-    val w = rect.width().coerceAtLeast(1).coerceAtMost(src.width - left)
-    val h = rect.height().coerceAtLeast(1).coerceAtMost(src.height - top)
-    return try { Bitmap.createBitmap(src, left, top, w, h) } catch (_: Exception) { null }
-}*/
-
 fun l2Normalize(v: FloatArray): FloatArray {
     var sum = 0f
     for (x in v) sum += x * x
@@ -132,71 +106,5 @@ fun l2Normalize(v: FloatArray): FloatArray {
     return v
 }
 
-/*
-@ExperimentalGetImage
-fun ImageProxy.toBitmapProcessed(mirror: Boolean = true): Bitmap? {
-    val planeY = planes[0].buffer
-    val planeU = planes[1].buffer
-    val planeV = planes[2].buffer
-
-    val ySize = planeY.remaining()
-    val uSize = planeU.remaining()
-    val vSize = planeV.remaining()
-
-    val nv21 = ByteArray(ySize + uSize + vSize)
-
-    planeY.get(nv21, 0, ySize)
-    planeV.get(nv21, ySize, vSize)
-    planeU.get(nv21, ySize + vSize, uSize)
-
-    val yuvImage = YuvImage(nv21, ImageFormat.NV21, width, height, null)
-    val out = java.io.ByteArrayOutputStream()
-    yuvImage.compressToJpeg(Rect(0, 0, width, height), 100, out)
-    val imageBytes = out.toByteArray()
-    var bmp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-
-    // rotar
-    val matrix = Matrix()
-    matrix.postRotate(imageInfo.rotationDegrees.toFloat())
-    if (mirror) {
-        matrix.postScale(-1f, 1f, bmp.width / 2f, bmp.height / 2f)
-    }
-    bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.width, bmp.height, matrix, true)
-
-    // debug
-    Log.d("toBitmapProcessed", "Bitmap listo: ${bmp.width}x${bmp.height}, mirror=$mirror, rot=${imageInfo.rotationDegrees}")
-
-    return bmp
-}*/
-
-/**
- * Redimensiona la imagen al tamaño requerido por FaceNet (160x160)
- */
-/*fun Bitmap.toFaceNetInputBitmap(targetSize: Int = 160): Bitmap {
-    return Bitmap.createScaledBitmap(this, targetSize, targetSize, true)
-}*/
-
-/**
- * Convierte el Bitmap a ByteBuffer con normalización [-1, 1]
- * Igual al preprocessing de shubham0204
- */
-/*fun Bitmap.toFaceNetByteBuffer(): ByteBuffer {
-
-    val inputSize = 160
-    val channels = 3
-    val inputBuffer = ByteBuffer.allocateDirect(1 * inputSize * inputSize * channels * 4)
-    inputBuffer.order(ByteOrder.nativeOrder())
-
-    val pixels = IntArray(inputSize * inputSize)
-    this.getPixels(pixels, 0, inputSize, 0, 0, inputSize, inputSize)
-
-    for (p in pixels) {
-        inputBuffer.putFloat((Color.red(p) - 127.5f) / 128f)
-        inputBuffer.putFloat((Color.green(p) - 127.5f) / 128f)
-        inputBuffer.putFloat((Color.blue(p) - 127.5f) / 128f)
-    }
-
-    return inputBuffer
-}*/
 
 

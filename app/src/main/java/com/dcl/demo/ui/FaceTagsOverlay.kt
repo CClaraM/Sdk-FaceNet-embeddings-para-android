@@ -1,6 +1,5 @@
 package com.dcl.demo.ui
 
-import android.graphics.RectF
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -9,21 +8,17 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dcl.demo.ui.LiveTag
 import kotlin.math.max
 
 /**
- * 🎯 FaceTagsOverlay
+ *  FaceTagsOverlay
  *
  * Dibuja las etiquetas (recuadro + texto) sobre los rostros detectados.
  * - Se adapta automáticamente al tamaño del frame.

@@ -79,28 +79,6 @@ class FaceDetectorEngine(
         }
     }
 
-    /**
-     * Recorta el rostro del bitmap con margen seguro
-     */
-    /*fun safeCrop(source: Bitmap, rect: RectF, padding: Float = 0.15f): Bitmap {
-        val width = source.width
-        val height = source.height
-
-        val padX = rect.width() * padding
-        val padY = rect.height() * padding
-
-        val left = (rect.left - padX).coerceAtLeast(0f)
-        val top = (rect.top - padY).coerceAtLeast(0f)
-        val right = (rect.right + padX).coerceAtMost(width.toFloat())
-        val bottom = (rect.bottom + padY).coerceAtMost(height.toFloat())
-
-        val cropWidth = (right - left).toInt().coerceAtLeast(1)
-        val cropHeight = (bottom - top).toInt().coerceAtLeast(1)
-        val safeLeft = left.toInt().coerceIn(0, width - cropWidth)
-        val safeTop = top.toInt().coerceIn(0, height - cropHeight)
-
-        return Bitmap.createBitmap(source, safeLeft, safeTop, cropWidth, cropHeight)
-    }*/
     fun close() {
         try {
             faceDetector.close() // si usas MediaPipe o BlazeFace Interpreter

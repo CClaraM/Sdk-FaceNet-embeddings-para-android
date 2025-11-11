@@ -17,7 +17,6 @@ import com.dcl.facesdk.utils.safeCropWithMargin
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.dcl.facesdk.utils.prepareForEmbedding
-import java.lang.reflect.Array.set
 
 import android.util.Log
 
@@ -54,7 +53,7 @@ class FaceSdk(
     private val faceNetEngine = FaceNetEngine(context)
 
     // ============================================================
-    // 🔹 ANALYZE FRAME — Flujo en vivo (preview)
+    //  ANALYZE FRAME — Flujo en vivo (preview)
     // ============================================================
     suspend fun analyzeFrame(
         image: ImageProxy,
@@ -154,7 +153,7 @@ class FaceSdk(
     }
 
     // ============================================================
-    // 🔹 PROCESS PHOTO — Flujo de foto HD (registro o verificación)
+    //  PROCESS PHOTO — Flujo de foto HD (registro o verificación)
     // ============================================================
     suspend fun processPhoto(bitmap: Bitmap): FaceSdkResult? = withContext(Dispatchers.Default) {
         try {
@@ -205,7 +204,7 @@ class FaceSdk(
 
 
     // ============================================================
-    // 🔹 IDENTIFY — Comparar embeddings (1:N)
+    //  IDENTIFY — Comparar embeddings (1:N)
     // ============================================================
     suspend fun identify(
         liveEmbedding: FloatArray,
@@ -300,7 +299,6 @@ class FaceSdk(
             Log.w("FaceSdk", "⚠️ Error cerrando FaceNetEngine")
         }
 
-        //try { spoofDetector.close() } catch (_: Exception) {}
         try {
             spoofDetector.close() // 🔹 Spoof detector (liveness)
         } catch (_: Exception) {

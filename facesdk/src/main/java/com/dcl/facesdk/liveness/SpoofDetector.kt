@@ -14,8 +14,7 @@ import java.nio.channels.FileChannel
 import kotlin.math.exp
 import kotlin.math.max
 import kotlin.math.min
-import kotlin.math.abs
- /////// NOOOO TOCARRR YA FUNCIONA /////
+
 data class SpoofResult(
     val isLive: Boolean,
     val liveScore: Float,      // prob. de la clase "live" (según liveIndex)
